@@ -5,7 +5,7 @@ base_url = "https://gabrieltb.me"
 # If you use the npm/node script then all you have to do is set offline = true, and everything else is automatic.
 
 title = "Silex Hortus"
-description = "Garden in silicon — a horticulture of ideas."
+description = "Silicon garden — horticulture of ideas."
 theme = "abridge"
 
 default_language = "en"
@@ -105,7 +105,7 @@ foothr = true # show or hide horizontal rule above footer
 
 ### $CURRENT_YEAR and $SITE_TITLE can be used anywhere within the copyright, you can change their position or you can also delete them and type whatever you want instead.
 #copyright = false # set to false to disable the copyright.
-#copyright_override = '© 2019-$CURRENT_YEAR $SITE_TITLE'
+copyright_override = '© $CURRENT_YEAR Gabriel Talbert Bunt'
 #copyright_override = '© $CURRENT_YEAR $SITE_TITLE • Website content is licensed <a rel="noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.'
 
 
