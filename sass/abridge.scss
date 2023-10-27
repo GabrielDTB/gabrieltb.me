@@ -12,7 +12,7 @@
   $syntax-mode: "auto",// Force syntax mode: auto, dark, light
   $switcherDefault: "dark",// default nojs switcher mode: dark, light (make sure to also set js_switcher_default in config.toml)
 
-  $color: "orange",// color template to use/override: orange, blue, blueshade
+  $color: "blue",// color template to use/override: orange, blue, blueshade
 
   $color-syntax: "abridge",// syntax color template to use/override: abridge,
   $syntax: true,//syntax highlighting for Code Blocks.
@@ -21,7 +21,7 @@
   $ic: true,// true for colorized icons, otherwise #888 is used.
 
   $icon-rss: true,
-  $icon-mail: false,// e-mail
+  $icon-mail: true,
   $icon-mastodon: false,
   $icon-element: false,
   $icon-matrix: false,
@@ -29,10 +29,10 @@
   $icon-kofi: false,
   $icon-twitter: false,
   $icon-facebook: false,
-  $icon-linkedin: false,
+  $icon-linkedin: true,
   $icon-codeberg: false,
   $icon-gitlab: false,
-  $icon-github: false,
+  $icon-github: true,
   $icon-github-sponsor: false,
   $icon-bitbucket: false,
   $icon-python: false,
@@ -41,7 +41,7 @@
   $icon-instagram: false,
   $icon-pixelfed: false,
   $icon-pinterest: false,
-  $icon-discord: false,
+  $icon-discord: true,
   $icon-twitch: false,
   $icon-youtube: false,
   $icon-researchgate: false,
