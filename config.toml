@@ -4,7 +4,7 @@ base_url = "https://gabrieltb.me"
 # Also set index format = "elasticlunr_javascript", and in [extra] uglyurls = true, integrity = false
 # If you use the npm/node script then all you have to do is set offline = true, and everything else is automatic.
 
-title = "Silex Hortus"
+title = "Gabriel Talbert Bunt"
 description = "Silicon garden — horticulture of ideas."
 theme = "abridge"
 
@@ -63,11 +63,8 @@ smart_punctuation = false          # `...` to `…`, `"quote"` to `“curly”` 
 ###############################################################################
 
 menu = [
-#    {url = "blog", name = "Blog", slash = true, blank = false, size="s110"},
     {url = "about", name = "About", slash = true, blank = false, size="s110"},
-    {url = "archive", name = "Posts", slash = true, blank = false, size="s110"},
-#    {url = "categories", name = "Categories", slash = true, blank = false, size="s110"},
-    {url = "tags", name = "Tags", slash = true, blank = false, size="s110"},
+    {url = "blog", name = "Blog", slash = true, blank = false, size="s110"},
 ]
 menu_footer = [
     {url = "about", name = "About", slash = true, blank = false},
@@ -96,7 +93,7 @@ footer_credit = true
 
 ### Uncomment one of the below lines, or neither, depending on which type of logo you want to use:
 #logo = { file="logo.svg", width="32", height="32", alt="Abridge", text="bridge" }
-textlogo = 'Silex<font color="#98c379">Hortus</font>'
+textlogo = 'GTB'
 #textlogo = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f90" viewBox="0 0 96 96" width="28" height="28"><path stroke-width="14" d="M14 99 46 7h4l32 92"/><path stroke-width="9" d="M-3 82c43-26 59-26 102 0"/><path stroke-linecap="round" stroke-width="1.5" d="M94 72v7m-5-9.8v7m-5-9.8v7.1M79 64v7M63 57.7v7m-5-8.2v7m-5-7.8v7m-5-7.2v7m-5-6.7v7m-5-6.3v7m-5-5.8v7M17 64v7m-5-4.6v7m-5-4.2v7M2 72v7"/></svg>bridge'
 
 sitedesc = false # enables or disables the display of the site description below the logo.
@@ -116,7 +113,7 @@ copyright_override = '© $CURRENT_YEAR Gabriel Talbert Bunt'
 ###############################################################################
 
 title_separator = "|"  # Separator between title and title_addition, set as |, -, _, etc
-title_addition = "Gabriel Talbert Bunt" # a default value for title addition
+# title_addition = "Gabriel Talbert Bunt" # a default value for title addition
 author = "Gabriel Talbert Bunt" # Put Your Name here
 keywords = "blog, personal site" # used for the primary site index
 banner = "banner.png" # Used as default image for OpenGraph/Twitter if page specific image is undefined.
