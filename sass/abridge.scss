@@ -1,5 +1,5 @@
 @use "hsv" as *;
-@use "hsluv-sass/hsluv.scss" as h;
+@use "hsluv" as *;
 
 @use '../themes/abridge/sass/abridge' with (
   /// LINES HERE END WITH COMMA AFTER THE VALUE!
@@ -77,32 +77,32 @@
   /// The colors below can be overrided individually as needed.
 
   /// Dark Colors
-  $f1d: h.hsluv(250.1, 19.6, 12.5 * 6),// Font Color Primary
-  $f2d: h.hsluv(250.1, 19.6, 12.5 * 6),// Font Color Headers
-  $c1d: h.hsluv(250.1, 19.6, 12.5 * 1),// Background Color Primary
-  $c2d: h.hsluv(250.1, 19.6, 12.5 * 2),// Background Color Secondary
-  $c3d: h.hsluv(250.1, 19.6, 12.5 * 4),// Table Rows, Block quote edge, Borders
-  $c4d: h.hsluv(250.1, 19.6, 12.5 * 3),// Disabled Buttons, Borders, mark background
-  $a1d: h.hsluv(114.1, 55.1, 12.5 * 6),// link color
-  $a2d: h.hsluv(114.1, 55.1, 12.5 * 7),// link hover/focus color
-  $a3d: h.hsluv(114.1, 55.1, 12.5 * 7),// link h1-h2 hover/focus color
-  $a4d: h.hsluv(114.1, 55.1, 12.5 * 5),// link visited color
-  $cgd: h.hsluv(114.1, 55.1, 12.5 * 6),// ins green, success
-  $crd: h.hsluv(8.6, 63.5, 60),// del red, errors
+  $f1d: hsluv(250.1, 19.6, 12.5 * 6),// Font Color Primary
+  $f2d: hsluv(250.1, 19.6, 12.5 * 6),// Font Color Headers
+  $c1d: hsluv(250.1, 19.6, 12.5 * 1),// Background Color Primary
+  $c2d: hsluv(250.1, 19.6, 12.5 * 2),// Background Color Secondary
+  $c3d: hsluv(250.1, 19.6, 12.5 * 4),// Table Rows, Block quote edge, Borders
+  $c4d: hsluv(250.1, 19.6, 12.5 * 3),// Disabled Buttons, Borders, mark background
+  $a1d: hsluv(114.1, 55.1, 12.5 * 6),// link color
+  $a2d: hsluv(114.1, 55.1, 12.5 * 7),// link hover/focus color
+  $a3d: hsluv(114.1, 55.1, 12.5 * 7),// link h1-h2 hover/focus color
+  $a4d: hsluv(114.1, 55.1, 12.5 * 5),// link visited color
+  $cgd: hsluv(114.1, 55.1, 12.5 * 6),// ins green, success
+  $crd: hsluv(8.6, 63.5, 60),// del red, errors
 
   /// Light Colors
-  $f1: h.hsluv(250.1, 19.6, 12.5 * 1),// Font Color Primary
-  $f2: h.hsluv(250.1, 19.6, 12.5 * 1),// Font Color Headers
-  $c1: h.hsluv(250.1, 19.6, 12.5 * 8),// Background Color Primary
-  $c2: h.hsluv(250.1, 19.6, 12.5 * 7),// Background Color Secondary
-  $c3: h.hsluv(250.1, 19.6, 12.5 * 6),// Table Rows, Block quote edge, Borders
-  $c4: h.hsluv(250.1, 19.6, 12.5 * 5),// Disabled Buttons, Borders, mark background
-  $a1: h.hsluv(114.1, 100, 12.5 * 5),// link color
-  $a2: h.hsluv(114.1, 100, 12.5 * 6),// link hover/focus color
-  $a3: h.hsluv(114.1, 100, 12.5 * 6),// link h1-h2 hover/focus color
-  $a4: h.hsluv(114.1, 100, 12.5 * 4),// link visited color
-  $cg: h.hsluv(114.1, 100, 12.5 * 5),// ins green, success
-  $cr: h.hsluv(8.6, 100, 12.5 * 4),// del red, errors
+  $f1: hsluv(250.1, 19.6, 12.5 * 1),// Font Color Primary
+  $f2: hsluv(250.1, 19.6, 12.5 * 1),// Font Color Headers
+  $c1: hsluv(250.1, 19.6, 12.5 * 8),// Background Color Primary
+  $c2: hsluv(250.1, 19.6, 12.5 * 7),// Background Color Secondary
+  $c3: hsluv(250.1, 19.6, 12.5 * 6),// Table Rows, Block quote edge, Borders
+  $c4: hsluv(250.1, 19.6, 12.5 * 5),// Disabled Buttons, Borders, mark background
+  $a1: hsluv(114.1, 100, 12.5 * 5),// link color
+  $a2: hsluv(114.1, 100, 12.5 * 6),// link hover/focus color
+  $a3: hsluv(114.1, 100, 12.5 * 6),// link h1-h2 hover/focus color
+  $a4: hsluv(114.1, 100, 12.5 * 4),// link visited color
+  $cg: hsluv(114.1, 100, 12.5 * 5),// ins green, success
+  $cr: hsluv(8.6, 100, 12.5 * 4),// del red, errors
 
   /// Dark Syntax Colors
   $h0d: hsl(220, 13, 20 * 0.82),// background color
