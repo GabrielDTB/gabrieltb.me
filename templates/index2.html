@@ -1,0 +1,69 @@
+{#
+This Template Shows a paginated page of the Posts of a section with a short summary.
+This Template can also be used directly for the index eg: example.com/ or as the rendering template for Sections, eg: example.com/blog/  example.com/software/
+#}
+
+{%- extends "pages.html" %}
+
+{%- block content %}
+    <div>
+    {%- for page in paginator.pages %}
+      <article>
+        {{- macros::title_index(page=page, config=config) }}
+        {%- if config.extra.meta_index.position %}
+        {%- if config.extra.meta_index.position == "top" or config.extra.meta_index.position == "both" %}
+        {{- macros::meta_index(page=page, config=config) }}
+        {%- endif %}{%- endif %}
+        <div class="sum">
+        <p>
+        {%- if page.summary %}
+          {{ page.summary | markdown(inline=true) | safe }}
+        {%- elif page.description %}
+          {{ page.description | safe }}
+        {%- elif page.content %}
+          {{ page.content | striptags | truncate(length=150) | safe }}
+        {%- elif page.extra.static_thumbnail %}
+        {%- endif %}
+          <a href="{{ page.permalink | safe }}{%- if uglyurls %}index.html{%- endif %}">...more</a>
+        </div>
+        {%- if config.extra.meta_index.position %}
+        {%- if config.extra.meta_index.position == "bottom" or config.extra.meta_index.position == "both" %}
+        {{- macros::meta_index(page=page, config=config) }}
+        {%- endif %}
+        {%- endif %}
+      </article>
+    {%- endfor %}
+    {{- macros::pagination(paginator=paginator, config=config) }}
+    </div>
+  {%- if config.extra.recent | default(value=true) %}
+    {#- The following line is checking if the template is being used for the root or a section #}
+    {%- if current_path is matching("^(/[[:alpha:]][[:alpha:]])?(/page/[[:digit:]]+)?/$") %}
+      {%- set sec = "" %}
+    {%- else %}
+      {%- if lang == config.default_language %}
+        {%- set sec = current_path | trim_start_matches(pat="/") | split(pat="/page/") | slice(end=1) | join(sep="") | trim_end_matches(pat="/") %}
+        {%- set sec = sec ~ "/" %}
+      {%- else %}
+        {%- set sec = current_path | trim_start_matches(pat="/" ~ lang ~ "/") | split(pat="/page/") | slice(end=1) | join(sep="") | trim_end_matches(pat="/") %}
+        {%- set sec = sec ~ "/" %}
+      {%- endif %}
+    {%- endif %}
+
+    {%- if lang == config.default_language %}
+    {%- set section_item = get_section(path=sec ~ "_index.md") %}
+    {%- else %}
+    {%- set section_item = get_section(path=sec ~ "_index." ~ lang ~ ".md") %}
+    {%- endif %}
+    <div class="sblock">
+      <div class="blockdiv sticky">
+        <span class="b s150"><a href="/tags">{{ macros::translate(key="Tags", default="Tags", i18n=i18n) }}</a></span>
+        {% set tags = get_taxonomy(kind="tags") %}
+        {% for item in tags.items | sort(attribute="pages") | reverse %}
+          <div class="tpad">
+            <a href="{{ item.permalink | safe }}{%- if uglyurls %}index.html{%- endif %}"> {{ item.name }}<sup>{{ item.pages | length }}</sup></a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {%- endif %}
+{%- endblock content %}
