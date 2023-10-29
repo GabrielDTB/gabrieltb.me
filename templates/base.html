@@ -24,6 +24,38 @@
   {%- endblock comments_init %}
 
   {%- include "partials/head_js.html" %}
+  <script>
+    (async () => {
+      let left;
+      let right;
+      let random;
+      //Get the random neighbor and the two neighbors
+      try {
+          response = await fetch(`https://sitring.eric.si/gabrieldtb/neighbors`, {
+              method: 'GET',
+          });
+          const randomResponse =  await fetch(`https://sitring.eric.si/gabrieldtb/random`, {
+              method: 'GET',
+          });
+      
+          [left, right] = await response.json();
+          random = await randomResponse.json();
+      }
+      catch (error) {
+          console.error(error);
+      }
+
+      console.log([left, random, right]);
+      let rleft = document.getElementById("sitwebringleft");
+      let rrandom = document.getElementById("sitwebringrandom");
+      let rright = document.getElementById("sitwebringright");
+      rleft.setAttribute("href", left.url);
+      rrandom.setAttribute("href", random.url);
+      rright.setAttribute("href", right.url);
+      rleft.text = left.name;
+      rright.text = right.name;
+    })()
+  </script>
 </head>
 <body>
 {%- block header %}
@@ -130,7 +162,6 @@
     {%- endif %}
     <div class="c">
       {%- include "partials/social.html" %}
-
       {#- Copyright START #}
       {%- if config.extra.copyright | default(value=true) -%}
       {%- set current_year = now() | date(format="%Y") %}
@@ -168,6 +199,19 @@
       <p{%- if config.extra.footer_size %} class="{{ config.extra.footer_size }}"{% endif %}>{{ macros::translate(key="Powered_by", default="Powered by", i18n=i18n) }} <a href="https://www.getzola.org/" target="_blank">Zola</a> {{ macros::translate(key="and", default="and", i18n=i18n) }} <a href="https://github.com/jieiku/abridge/" target="_blank">Abridge</a></p>
       {%- endif %}
       {%- endif %}
+      {#- SIT Webring #}
+      <p class="s90">
+      <a href="https://github.com/Stevens-26/webring/">Stevens Community Webring</a>
+      </p>
+      <div class="s90">
+        <text>⮜</text>
+        <a id="sitwebringleft" href="https://nad2040.github.io/">Dan Liu</a>
+        <b>·</b>
+        <a id="sitwebringrandom" href="404">Random</a>
+        <text>·</text>
+        <a id="sitwebringright" href="https://ericz.me/">Tianyu (Eric) Zhu</a>
+        <text>➤</text>
+      </div>
     </div>
   </footer>
 {%- endblock footer %}
