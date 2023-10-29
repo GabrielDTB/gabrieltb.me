@@ -25,36 +25,16 @@
 
   {%- include "partials/head_js.html" %}
   <script>
-    (async () => {
-      let left;
-      let right;
-      let random;
-      //Get the random neighbor and the two neighbors
-      try {
-          response = await fetch(`https://sitring.eric.si/gabrieldtb/neighbors`, {
-              method: 'GET',
-          });
-          const randomResponse =  await fetch(`https://sitring.eric.si/gabrieldtb/random`, {
-              method: 'GET',
-          });
-      
-          [left, right] = await response.json();
-          random = await randomResponse.json();
-      }
-      catch (error) {
-          console.error(error);
-      }
-
-      console.log([left, random, right]);
-      let rleft = document.getElementById("sitwebringleft");
-      let rrandom = document.getElementById("sitwebringrandom");
-      let rright = document.getElementById("sitwebringright");
-      rleft.setAttribute("href", left.url);
-      rrandom.setAttribute("href", random.url);
-      rright.setAttribute("href", right.url);
-      rleft.text = left.name;
-      rright.text = right.name;
-    })()
+    (async () => { try {
+      const api = "https://sitring.eric.si/gabrieldtb/";
+      n = await(await fetch(api + "neighbors")).json(); 
+      n.push(await(await fetch(api + "random")).json());
+      for ([i, a] of [
+        "sitwebringleft", "sitwebringright", "sitwebringrandom"
+      ].map(id => document.getElementById(id)).entries()) {
+        a.setAttribute("href", n[i].url);
+        if (i != 2) { a.text = n[i].name }
+      }} catch (error) { console.error(error) }})()
   </script>
 </head>
 <body>
