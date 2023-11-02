@@ -1,11 +1,11 @@
 +++
 title = "Installing Kopia on Nixos"
-description = "Making backups with Kopia is easy. Plus, it comes with all kinds of useful features that save you money."
+description = "Making backups with Kopia is easy. Plus, it comes with all kinds of useful features that save you money"
 date = 2023-10-30
 draft = false
 
 [taxonomies]
-tags = ["Data","Linux","NixOS"]
+tags = ["Data","Linux","NixOS","Tutorial"]
 [extra]
 toc = true
 +++
@@ -168,7 +168,7 @@ kopia benchmark compression \
 
 The output will look something like:
 
-```text
+```txt
     Compression                Compressed   Throughput   Allocs   Usage
 --------------------------------------------------------------------------
  0. zstd-better-compression    17.8 MB      210 MB/s     3163     99.7 MB
