@@ -1,9 +1,0 @@
-@function hsv($h-hsv, $s-hsv, $b-hsv, $a: 1) {
-  @if $b-hsv == 0 {
-    @return hsla(0, 0, 0, $a)
-  } @else {
-    $l-hsl: ($b-hsv/2) * (2 - ($s-hsv/100));
-    $s-hsl: ($b-hsv * $s-hsv) / if($l-hsl < 50, $l-hsl * 2, 200 - $l-hsl * 2);
-    @return hsla($h-hsv, $s-hsl, $l-hsl, $a);
-  }
-}
