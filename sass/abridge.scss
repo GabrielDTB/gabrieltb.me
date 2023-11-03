@@ -77,57 +77,57 @@
   /// The colors below can be overrided individually as needed.
 
   /// Dark Colors
-  $f1d: hsluv(250.1, 19.6, 12.5 * 6),// Font Color Primary
-  $f2d: hsluv(250.1, 19.6, 12.5 * 6),// Font Color Headers
-  $c1d: hsluv(250.1, 19.6, 12.5 * 1),// Background Color Primary
-  $c2d: hsluv(250.1, 19.6, 12.5 * 2),// Background Color Secondary
-  $c3d: hsluv(250.1, 19.6, 12.5 * 4),// Table Rows, Block quote edge, Borders
-  $c4d: hsluv(250.1, 19.6, 12.5 * 3),// Disabled Buttons, Borders, mark background
-  $a1d: hsluv(114.1, 55.1, 12.5 * 6),// link color
-  $a2d: hsluv(114.1, 55.1, 12.5 * 7),// link hover/focus color
-  $a3d: hsluv(114.1, 55.1, 12.5 * 7),// link h1-h2 hover/focus color
-  $a4d: hsluv(114.1, 55.1, 12.5 * 5),// link visited color
-  $cgd: hsluv(114.1, 55.1, 12.5 * 6),// ins green, success
+  $f1d: hsluv(250.1, 19.6, 9 * 8.5),// Font Color Primary
+  $f2d: hsluv(250.1, 19.6, 9 * 9),// Font Color Headers
+  $c1d: hsluv(250.1, 19.6, 9 * 1.5),// Background Color Primary
+  $c2d: hsluv(250.1, 19.6, 9 * 2),// Background Color Secondary
+  $c3d: hsluv(114.1, 55.1, 15 * 2.5),// Table Rows, Block quote edge, Borders
+  $c4d: hsluv(250.1, 19.6, 9 * 4),// Disabled Buttons, Borders, mark background
+  $a1d: hsluv(114.1, 55.1, 15 * 5),// link color
+  $a2d: hsluv(114.1, 55.1, 15 * 6),// link hover/focus color
+  $a3d: hsluv(114.1, 55.1, 15 * 6),// link h1-h2 hover/focus color
+  $a4d: hsluv(114.1, 55.1, 15 * 4),// link visited color
+  $cgd: hsluv(114.1, 55.1, 15 * 5),// ins green, success
   $crd: hsluv(8.6, 63.5, 60),// del red, errors
 
   /// Light Colors
-  $f1: hsluv(250.1, 19.6, 12.5 * 1),// Font Color Primary
-  $f2: hsluv(250.1, 19.6, 12.5 * 1),// Font Color Headers
-  $c1: hsluv(250.1, 19.6, 12.5 * 8),// Background Color Primary
-  $c2: hsluv(250.1, 19.6, 12.5 * 7),// Background Color Secondary
-  $c3: hsluv(250.1, 19.6, 12.5 * 6),// Table Rows, Block quote edge, Borders
-  $c4: hsluv(250.1, 19.6, 12.5 * 5),// Disabled Buttons, Borders, mark background
-  $a1: hsluv(114.1, 100, 12.5 * 5),// link color
-  $a2: hsluv(114.1, 100, 12.5 * 6),// link hover/focus color
-  $a3: hsluv(114.1, 100, 12.5 * 6),// link h1-h2 hover/focus color
-  $a4: hsluv(114.1, 100, 12.5 * 4),// link visited color
-  $cg: hsluv(114.1, 100, 12.5 * 5),// ins green, success
-  $cr: hsluv(8.6, 100, 12.5 * 4),// del red, errors
+  $f1: hsluv(250.1, 19.6, 9 * 1),// Font Color Primary
+  $f2: hsluv(250.1, 19.6, 9 * 1),// Font Color Headers
+  $c1: hsluv(250.1, 19.6, 9 * 11),// Background Color Primary
+  $c2: hsluv(250.1, 19.6, 9 * 10),// Background Color Secondary
+  $c3: hsluv(114.1, 55.1, 15 * 5),// Table Rows, Block quote edge, Borders
+  $c4: hsluv(250.1, 19.6, 9 * 1),// Disabled Buttons, Borders, mark background
+  $a1: hsluv(114.1, 100, 15 * 4),// link color
+  $a2: hsluv(114.1, 100, 15 * 5),// link hover/focus color
+  $a3: hsluv(114.1, 100, 15 * 5),// link h1-h2 hover/focus color
+  $a4: hsluv(114.1, 100, 15 * 3),// link visited color
+  $cg: hsluv(114.1, 100, 15 * 4),// ins green, success
+  $cr: hsluv(8.6, 100, 60),// del red, errors
 
   /// Dark Syntax Colors
-  $h0d: hsl(220, 13, 20 * 0.82),// background color
-  $h1d: hsl(220, 13, 71),// unstyled text
-  $h2d: hsl(220, 13, 71 * 0.82),// comments
-  $h3d: hsv(5, 68, 89),// red, support function
-  $h4d: hsv(29, 51, 82),// orange, punctuation, constant, variable, json-key
-  $h5d: hsv(39, 46, 90),// tan, entity/function name
-  $h6d: hsv(95, 38, 76),// green, string
-  $h7d: hsv(187, 56, 76),// teal, escape character
-  $h8d: hsv(207, 59, 94),// blue, declaration, tag, property
-  $h9d: hsv(286, 46, 87),// purple, operators
+  $h0d: hsluv(250.1, 19.6, 9 * 2),// background color
+  $h1d: hsluv(250.1, 19.6, 9 * 8),// unstyled text
+  $h2d: hsluv(250.1, 19.6, 9 * 5),// comments
+  $h3d: hsluv(8.6, 63.5, 60),// red, support function
+  $h4d: hsluv(45, 63.5, 60),// orange, punctuation, constant, variable, json-key
+  $h5d: hsluv(60.4, 60.8, 79.5),// tan, entity/function name
+  $h6d: hsluv(114.1, 55.1, 15 * 5),// green, string
+  $h7d: hsluv(205.2, 77.4, 69),// teal, escape character
+  $h8d: hsluv(242.1, 80.8, 69),// blue, declaration, tag, property
+  $h9d: hsluv(296.2, 67.3, 62.2),// purple, operators
   $had: 160%,// mark/highlight line
 
   /// Light Syntax Colors
-  $h0: hsl(220, 13, 20 * 0.82),// background color
-  $h1: hsl(220, 13, 71),// unstyled text
-  $h2: hsl(220, 13, 71 * 0.82),// comments
-  $h3: hsv(5, 68, 89),// red, support function
-  $h4: hsv(29, 51, 82),// orange, punctuation, constant, variable, json-key
-  $h5: hsv(39, 46, 90),// tan, entity/function name
-  $h6: hsv(95, 38, 76),// green, string
-  $h7: hsv(187, 56, 76),// teal, escape character
-  $h8: hsv(207, 59, 94),// blue, declaration, tag, property
-  $h9: hsv(286, 46, 87),// purple, operators
+  $h0: hsluv(250.1, 19.6, 9 * 10),// background color
+  $h1: hsluv(250.1, 19.6, 9 * 2),// unstyled text
+  $h2: hsluv(250.1, 19.6, 9 * 6),// comments
+  $h3: hsluv(8.6, 100, 50),// red, support function
+  $h4: hsluv(45, 100, 50),// orange, punctuation, constant, variable, json-key
+  $h5: hsluv(60.4, 100, 60),// tan, entity/function name
+  $h6: hsluv(114.1, 100, 15 * 4),// green, string
+  $h7: hsluv(205.2, 100, 50),// teal, escape character
+  $h8: hsluv(242.1, 100, 50),// blue, declaration, tag, property
+  $h9: hsluv(296.2, 100, 50),// purple, operators
   $ha: 160%,// mark/highlight line
 
   /// These lines find the spot at which to insert your appended fonts.
