@@ -6,7 +6,6 @@ base_url = "https://gabrieltb.me"
 
 title = "Gabriel Talbert Bunt"
 description = "Silicon garden — horticulture of ideas."
-theme = "abridge"
 
 default_language = "en"
 compile_sass = true
