@@ -153,7 +153,7 @@ Running `zola serve` gives me this blank canvas:
 
 Make sure to commit and push all changes at this point.
 
-# Setting up GitHub Pages
+## Setting up GitHub Pages
 
 Now that I have **something** to deploy, I might as well set up *GitHub Pages*. Following [the docs](https://www.getzola.org/documentation/deployment/github-pages/), I will use *GitHub Actions* for my CI. For this I will need to create the *GitHub Action* and change some settings.
 
