@@ -119,7 +119,7 @@ banner = "banner.png" # Used as default image for OpenGraph/Twitter if page spec
 twitter_meta = "" # for SEO: twitter:site and twitter:creator
 google = ""
 bing = ""
-seo = false  # enable or disable seo-related meta tags: opengraph, facebook, twitter
+seo = true  # enable or disable seo-related meta tags: opengraph, facebook, twitter
 #dev = false # development mode, if true then robots.txt should prevent search indexing.
 
 
