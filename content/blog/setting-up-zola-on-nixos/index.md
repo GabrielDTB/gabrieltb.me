@@ -2,6 +2,7 @@
 title = "Setting Up Zola On NixOS"
 description = "Devlog for setting up my first personal website, walking through the setup process for Zola on NixOS"
 date = 2023-11-02
+updated = 2023-11-09
 draft = false
 
 [taxonomies]
@@ -202,6 +203,15 @@ Still in the `Pages` settings, under `> Custom domain` I fill in my domain as `g
 185.199.109.153
 185.199.110.153
 185.199.111.153
+```
+
+Because a friend reminded me that IPV6 exists, I add the "AAAA" records that point to the site as well:
+
+```txt
+2606:50c0:8000::153
+2606:50c0:8001::153
+2606:50c0:8002::153
+2606:50c0:8003::153
 ```
 
 Then, in my repository, I create `static/CNAME` that contains just `gabrieltb.me`. Pushing that change, I await a successful build and deployment. Nothing went wrong, so I visit the site at `http://gabrieltb.me` and it looks exactly the same. Whatever, I should finish the job and enable *HTTPS* enforcement since being flagged as insecure looks bad. Still in `Pages`, I go to enable *HTTPS* but the option is grayed out. After futzing around, [reading some outdated articles](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages), and getting error messages saying that my domain verification failed, the option to enable it is no longer grayed out. Hooray! And with that, the site is no longer mangled. Another hooray!
