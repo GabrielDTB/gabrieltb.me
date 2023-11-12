@@ -79,8 +79,8 @@ series = true
 series_items = 9 # Max number of items to display in series list, use 0 to disable
 #Series_parts = "$NUMBER_OF_PARTS part Series"
 
-meta_index = { position="bottom", size="s90", author=false, readtime=false, readstring="min", date=true, updated=false, categories_tags=true, divider="" }
-meta_post = { position="top", size="s95", author=true, readtime=false, readstring="min read", date=true, updated=true, categories_tags=true, divider="" }
+meta_index = { position="bottom", size="s90", author=false, readtime=false, readstring="min", date=true, updated=true, categories_tags=true, divider="" }
+meta_post = { position="top", size="s95", author=false, readtime=true, date=true, updated=true, categories_tags=true, divider="·" }
 
 hide_section_dates = false # hides the date for sections that use posts.html as their template.
 hide_page_nextprev_titles = false # hides the next/previous titles for pages that use page.html as their template.
@@ -185,9 +185,7 @@ github = "gabrieldtb"
 # do NOT include a trailing slash on the online URL
 online_url = "https://gabrieltb.me"
 online_indexformat = "elasticlunr_json"# used to restore your preferred index format when offline = false
-offline = false # implies uglyurls=true and integrity=false, when true NPM/node will automatically set the path for the base_url, it will build the site, then set the base_url back to what it was.
 
-uglyurls = false # if set to true then links are generated with the full path. eg https://abridge.netlify.app/index.html
 integrity = true # increases site security, should normally be true. (setting to false is useful during js development)
 js_bundle = false # multiple javascript files combined into a single file (setting to false is useful during js development)
 
