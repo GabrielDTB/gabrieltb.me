@@ -2,6 +2,7 @@
 title = "Installing Kopia on Nixos"
 description = "Making backups with Kopia is easy. Plus, it comes with all kinds of useful features that save you money"
 date = 2023-10-30
+updated = 2023-11-12
 draft = false
 
 [taxonomies]
@@ -214,6 +215,66 @@ kopia snapshot create [path]
 ```
 
 Assuming this succeeds, all that's left to do is configure automatic snapshots. You can use `cron` or `systemd services` to accomplish this -- *Kopia* apparently has something built in for scheduling backups, but one of the creators themselves [doesn't use it](https://kopia.discourse.group/t/policy-schedule/74), so I'm not going to bother with it.
+
+Since NixOS already uses *systemd* extensively, I'm going to use a *systemd service* which gets triggered periodically by a *systemd timer* to automatically trigger snapshots. There are two main ways to do this -- either through *Home Manager* or through the global config. For *Home Manager*, I add something like [this](https://discourse.nixos.org/t/is-there-a-trick-to-getting-systemd-user-timers-to-work/27997) to my *Home Manager* config:
+
+```nix
+systemd.user.services.kopia = {
+  Unit = {
+    Description = "Kopia backup";
+    After = [ "network.target" ];
+  };
+  Service = {
+    Type = "oneshot";
+    ExecStart = toString (
+      pkgs.writeShellScript "kopia-backup-script.sh" ''
+        set -eou pipefail
+
+        ${pkgs.kopia}/bin/kopia snapshot create [SNAPSHOT_DIR1]
+        ${pkgs.kopia}/bin/kopia snapshot create [SNAPSHOT_DIR2]
+      ''
+    );
+  };
+  Install.WantedBy = [ "default.target" ];
+};
+systemd.user.timers.kopia = {
+  Unit.Description = "Kopia backup schedule";
+  Timer = {
+    Unit = "kopia";
+    OnUnitActiveSec = "1h";
+  };
+  Install.WantedBy = [ "timers.target" ];
+};
+```
+
+For global config, I use something like [this](https://nixos.wiki/wiki/Systemd/Timers):
+
+```nix
+systemd.services.kopia = {
+  description = "Kopia backup";
+  after = [ "network.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    User = "[USER]";
+    ExecStart = toString {
+      pkgs.writeShellScript "kopia-backup-script.sh" ''
+        set -eou pipefail
+
+        ${pkgs.kopia}/bin/kopia snapshot create [SNAPSHOT_DIR1]
+        ${pkgs.kopia}/bin/kopia snapshot create [SNAPSHOT_DIR2]
+      ''
+    };
+  };
+};
+systemd.timers.kopia = {
+  description = "Kopia backup schedule";
+  timerConfig = {
+    Unit = "kopia.service";
+    OnUnitActivateSec = "1h;"
+  };
+  wantedBy = [ "timers.target" ];
+};
+```
 
 That's pretty much it! If all went well then snapshots should be quick and painless to add, and you can rest easy. Keep an eye out for a followup article on the second mandatory step for a good backup policy -- periodically verifying that backups are being taken, are accessible, and can be restored from quickly.
 
