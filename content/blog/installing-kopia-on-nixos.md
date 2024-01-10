@@ -235,12 +235,13 @@ systemd.user.services.kopia = {
       ''
     );
   };
-  Install.WantedBy = [ "default.target" ];
 };
+
 systemd.user.timers.kopia = {
   Unit.Description = "Kopia backup schedule";
   Timer = {
-    Unit = "kopia";
+    Unit = "oneshot";
+    OnBootSec = "1h";
     OnUnitActiveSec = "1h";
   };
   Install.WantedBy = [ "timers.target" ];
@@ -250,30 +251,30 @@ systemd.user.timers.kopia = {
 For global config, I use something like [this](https://nixos.wiki/wiki/Systemd/Timers):
 
 ```nix
-systemd.services.kopia = {
-  description = "Kopia backup";
-  after = [ "network.target" ];
-  serviceConfig = {
-    Type = "oneshot";
-    User = "[USER]";
-    ExecStart = toString {
-      pkgs.writeShellScript "kopia-backup-script.sh" ''
-        set -eou pipefail
+  systemd.services.kopia = {
+    after = [ "network.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+      ExecStart = toString (
+        pkgs.writeShellScript "kopia-backup-script.sh" ''
+          set -eou pipefail
 
-        ${pkgs.kopia}/bin/kopia snapshot create [SNAPSHOT_DIR1]
-        ${pkgs.kopia}/bin/kopia snapshot create [SNAPSHOT_DIR2]
-      ''
+          ${pkgs.kopia}/bin/kopia snapshot create [SNAPSHOT_DIR1]
+          ${pkgs.kopia}/bin/kopia snapshot create [SNAPSHOT_DIR2]
+        ''
+      );
     };
   };
-};
-systemd.timers.kopia = {
-  description = "Kopia backup schedule";
-  timerConfig = {
-    Unit = "kopia.service";
-    OnUnitActivateSec = "1h;"
+
+  systemd.timers.kopia = {
+    timerConfig = {
+      OnBootSec = "1h";
+      OnUnitActiveSec = "1h";
+      Unit = "kopia.service";
+    };
+    wantedBy = [ "timers.target" ];
   };
-  wantedBy = [ "timers.target" ];
-};
 ```
 
 That's pretty much it! If all went well then snapshots should be quick and painless to add, and you can rest easy. Keep an eye out for a followup article on the second mandatory step for a good backup policy -- periodically verifying that backups are being taken, are accessible, and can be restored from quickly.
