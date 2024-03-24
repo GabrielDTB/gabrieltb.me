@@ -5,16 +5,18 @@ template = "pages.html"
 draft = false
 +++
 
-This site is made using [Zola](https://www.getzola.org/), a single binary static site generator written in Rust
-with support for just about anything you could want in a static site.
+# About this website
 
-Currently I heavily rely on the [Abridge](https://abridge.netlify.app/) theme to provide
-structure and utilities, though I would like to depend less on it in the future. 
-It's been a great starting point and it will take a while to make everything 'mine'.
+This is made using [Zola](https://www.getzola.org/), a single binary static site
+generator written in Rust with support for just about anything you could want in
+a static site.
 
-The dark theme is completely inspired by Atom's (rest in peace) OneDark theme. 
-Some finishing touches are needed but mostly I'm just copy and pasting values.
-The light theme is unfinished but I will try to create a bright light theme using similar colors to OneDark.
+Currently, I heavily rely on the [Abridge](https://abridge.netlify.app/) theme
+to provide structure and utilities, though I would like to depend less on it in
+the future. It's been a great starting point, and I'd certainly recommend it.
 
-I document my entire process of building this site on the blog. 
-I'd recommend checking it out if you're interested in the site in more detail.
+The dark theme copies Atom's (RIP) OneDark theme. The light theme is a custom
+adaptation of OneDark to a light palette.
+
+I document the entire process of building this site on my blog. Check it out if
+you're interested in the site in more detail!
