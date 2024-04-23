@@ -5,7 +5,7 @@ base_url = "https://gabrieltb.me"
 # If you use the npm/node script then all you have to do is set offline = true, and everything else is automatic.
 
 title = "Gabriel Talbert Bunt"
-description = "Silicon garden — horticulture of ideas."
+description = "Silicon garden."
 
 default_language = "en"
 compile_sass = true
