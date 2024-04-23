@@ -21,7 +21,7 @@
     <div>
       <div class="c">
         <h1>{{ terms | length }} {{ macros::translate(key="Tags", default="Tags", i18n=i18n) }} </h1>
-        <p>{% for term in terms %} #<a href="#{{ term.name }}">{{ term.name }}</a><sup>{{ term.pages | length }}</sup> {% endfor %}</p>
+        <p>{% for term in terms %} #<a href="{{ term.permalink | safe }}{%- if uglyurls %}index.html{%- endif %}">{{ term.name }}</a><sup>{{ term.pages | length }}</sup> {% endfor %}</p>
       </div>
       {%- for term in terms %}
       <h2 id="{{ term.name }}">#<a href="{{ term.permalink | safe }}{%- if uglyurls %}index.html{%- endif %}">{{ term.name }}</a></h2>
