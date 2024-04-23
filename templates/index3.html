@@ -1,0 +1,38 @@
+{#
+This Template Shows a paginated page of the Posts of a section with a short summary.
+This Template can also be used directly for the index eg: example.com/ or as the rendering template for Sections, eg: example.com/blog/  example.com/software/
+#}
+
+{%- extends "pages.html" %}
+
+{%- block content %}
+    <div>
+    {%- for page in paginator.pages %}
+      <article>
+        {{- macros::title_index(page=page, config=config) }}
+        {%- if config.extra.meta_index.position %}
+        {%- if config.extra.meta_index.position == "top" or config.extra.meta_index.position == "both" %}
+        {{- macros::meta_index(page=page, config=config) }}
+        {%- endif %}{%- endif %}
+        <div class="sum">
+        <p>
+        {%- if page.summary %}
+          {{ page.summary | markdown(inline=true) | safe }}
+        {%- elif page.description %}
+          {{ page.description | safe }}
+        {%- elif page.content %}
+          {{ page.content | striptags | truncate(length=280) | safe }}
+        {%- elif page.extra.static_thumbnail %}
+        {%- endif %}
+          <a href="{{ page.permalink | safe }}{%- if uglyurls %}index.html{%- endif %}">...more</a>
+        </div>
+        {%- if config.extra.meta_index.position %}
+        {%- if config.extra.meta_index.position == "bottom" or config.extra.meta_index.position == "both" %}
+        {{- macros::meta_index(page=page, config=config) }}
+        {%- endif %}
+        {%- endif %}
+      </article>
+    {%- endfor %}
+    {{- macros::pagination(paginator=paginator, config=config) }}
+    </div>
+{%- endblock content %}
