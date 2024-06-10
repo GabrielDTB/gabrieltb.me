@@ -64,3 +64,5 @@ make -j`nproc`
 ```
 
 Build should succeed.
+
+Unfortunately, running `~/openpose/build/examples/openpose/openpose.bin` seg faults. I have to suspect that this is because caffe wasn't build properly due to the above hack.
