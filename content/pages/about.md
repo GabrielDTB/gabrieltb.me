@@ -13,10 +13,6 @@ a static site.
 
 Currently, I heavily rely on the [Abridge](https://abridge.netlify.app/) theme
 to provide structure and utilities, though I would like to depend less on it in
-the future. It's been a great starting point, and I'd certainly recommend it.
+the future. It's been a great starting point, but it has more than I need.
 
-The dark theme copies Atom's (RIP) OneDark theme. The light theme is a custom
-adaptation of OneDark to a light palette.
-
-I document the entire process of building this site on my blog. Check it out if
-you're interested in the site in more detail!
+The source for the website can be found [here](https://github.com/GabrielDTB/gabrieltb.me).
