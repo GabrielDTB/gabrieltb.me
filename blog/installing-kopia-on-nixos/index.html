@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://gabrieltb.me/js/theme.min.js" integrity="sha384-pb++s6uBRKaQv+iAXpgA/H3IlpLZdO14tTwuCI7uXmz4aaZdByoCcM+6BhynMq/1"></script>
+  <link rel="stylesheet" href="https://gabrieltb.me/abridge.css?h=b3481634ca8d2e2815e5" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="base" content="https://gabrieltb.me" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <link rel="manifest" href="https://gabrieltb.me/manifest.min.json" />
+  <link rel="mask-icon" href="https://gabrieltb.me/safari-pinned-tab.svg" color="#FFFFFF" />
+  <link rel="icon" type="image/svg+xml" href="https://gabrieltb.me/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://gabrieltb.me/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gabrieltb.me/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gabrieltb.me/favicon-16x16.png" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>Installing Kopia on Nixos | Gabriel Talbert Bunt</title>
+  <meta name="author" content="Gabriel Talbert Bunt" />
+  <meta name="copyright" content="Gabriel Talbert Bunt" />
+  <meta name="description" content="  Making backups with Kopia is easy. Plus, it comes with all kinds of useful
+  features that save you money
+" />
+  <link rel="canonical" href="https://gabrieltb.me/blog/installing-kopia-on-nixos/" />
+  <meta name="keywords" content="blog, personal site" />
+  <meta property="og:url" content="https://gabrieltb.me/blog/installing-kopia-on-nixos/" />
+  <meta name="twitter:url" content="https://gabrieltb.me/blog/installing-kopia-on-nixos/" />
+  <meta property="og:description" content="  Making backups with Kopia is easy. Plus, it comes with all kinds of useful
+  features that save you money
+" />
+  <meta name="twitter:description" content="  Making backups with Kopia is easy. Plus, it comes with all kinds of useful
+  features that save you money
+" />
+  <meta property="og:title" content="Installing Kopia on Nixos | Gabriel Talbert Bunt" />
+  <meta name="twitter:title" content="Installing Kopia on Nixos | Gabriel Talbert Bunt" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://gabrieltb.me/banner.png" />
+  <meta property="og:image" content="https://gabrieltb.me/banner.png" />
+  <meta property="og:site_name" content="Gabriel Talbert Bunt" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="2023-11-12" />
+  <script defer src="https://gabrieltb.me/js/theme_button.js?h=88ef48703a1e0adb544c" integrity="sha384-IM4TFKBTNeV1+uJdNlY98JIVpr06AHHcQdvtFC49HFw2PrKkEFdUPcOmtcd2p3eV"></script>
+  <script defer src="https://gabrieltb.me/js/email.js?h=ee3dd742e11c5014fdef" integrity="sha384-y0LUfjslyVLYZvCOyhELpvKivlXAq27Vnbed54glXoe/pZSYS/Pfqghp/sQt1xcV"></script>
+  <script defer src="https://gabrieltb.me/js/codecopy.js?h=0a54f99e682443925d3a" integrity="sha384-qssVvPpQgISh4PFkSBGTgXEMzuFO8Hat5m1MsdkpannoByWSTpLfBe4iEVl3+RiP"></script>
+  <script defer src="https://gabrieltb.me/js/sw_load.js?h=c78b2129fc8ba90d8121" integrity="sha384-+/AkBAf3daFHApyORJhlCmEx061QHqCUBeTBFVStcGq7vrnZu0odhtV+U0hrCzHr"></script>
+  <noscript><link rel="stylesheet" href="https://gabrieltb.me/nojs.css" /></noscript>
+  <script>
+    (async () => { try {
+      const api = "https://sitring.eric.si/gabrieldtb/";
+      n = await(await fetch(api + "neighbors")).json(); 
+      n.push(await(await fetch(api + "random")).json());
+      for ([i, a] of [
+        "sitwebringleft", "sitwebringright", "sitwebringrandom"
+      ].map(id => document.getElementById(id)).entries()) {
+        a.setAttribute("href", n[i].url);
+        if (i != 2) { a.text = n[i].name }
+      }} catch (error) { console.error(error) }})()
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://gabrieltb.me" title="Gabriel Talbert Bunt">Home</a></h1></div>
+      <div>
+
+        <div>
+          <ul><li><a class="s110" href="https://gabrieltb.me/blog/"> Blog </a></li><li><a class="s110" href="https://gabrieltb.me/µ/"> µ </a></li><li><i type="reset" id="mode" class="js svgs adjust"></i></ul>
+        </div>
+
+        <div>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+  <main>
+    <article><h1><a href="https://gabrieltb.me/blog/installing-kopia-on-nixos/">Installing Kopia on Nixos</a></h1><span                                                                                               
+      class="s95"                                                                         
+  >11&nbspmin&nbspread<span class="hpad">·</span>October&nbsp;30,&nbsp;2023<span class="hpad">·</span><em>(November&nbsp;12,&nbsp;2023)</em><span class="hpad">·</span>#<a href="
+          https://gabrieltb.me/tags/data/
+        ">Data&nbsp;</a>#<a href="
+          https://gabrieltb.me/tags/linux/
+        ">Linux&nbsp;</a>#<a href="
+          https://gabrieltb.me/tags/nixos/
+        ">NixOS&nbsp;</a>#<a href="
+          https://gabrieltb.me/tags/tutorial/
+        ">Tutorial&nbsp;</a></span>
+
+    
+
+
+<p>I have a bunch of data that I want to backup -- who doesn't? Here are my
+considerations and why I landed on <em>Kopia</em>:</p>
+<ul>
+<li>Data lives on many hosts and I want all of it to go to the same place. The
+backup solution should be able to take advantage of this by getting a better
+deduplication ratio.</li>
+<li>Everything needs to be encrypted to protect against data breaches and so that
+I can upload to any host, even untrusted ones.</li>
+<li>Version history should be maintained and easily explorable.</li>
+<li>Compression must be supported, as I keep many easily compressible (text)
+files.</li>
+<li>Must be open source.</li>
+</ul>
+<p><em>Kopia</em> satisfies all of these requirements, plus it provides many niceties
+that one would expect from a cloud native application such as caching backups /
+metadata to save costs. It also provides a server mode so that each host
+can backup their files without potentially interacting with the other hosts'
+files. This is nice from a security perspective, since in theory a host can
+be compromised without potentially compromising all my backups. That's just
+theoretically though, and I'm pretty sure that <em>Kopia</em> was not written with
+security at the forefront. It does ensure that I don't accidentally mess with
+backups that I didn't want to touch.</p>
+<p>Anyway, enough about <em>Kopia</em>. Let's set it up.</p>
+<h2 id="setting-up-kopia">Setting up <em>Kopia</em></h2>
+<p>For the initial setup, I install <em>Kopia</em> on a dedicated machine. This machine
+will receive and handle all of the requests from the different hosts, so it
+should have at least a few resources. Setting up the other hosts will come
+later.</p>
+<h3 id="installation">Installation</h3>
+<p>I'll be setting up <em>Kopia</em> through its CLI on <em>NixOS</em> version 23.05. Some day I
+will write declarative configuration for it, but that day is not today.</p>
+<p>To install Kopia, add <code>kopia</code> to your system packages. In my case, I'm using
+<em>Home Manager</em>, so my config looks something like:</p>
+<pre data-lang="nix" class="language-nix z-code"><code class="language-nix" data-lang="nix"><span class="z-source z-nix"><span class="z-variable z-parameter z-name z-nix">home</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">packages</span> <span class="z-invalid z-illegal">=</span> <span class="z-invalid z-illegal z-reserved z-nix">with</span> <span class="z-variable z-parameter z-name z-nix">pkgs</span><span class="z-invalid z-illegal">;</span> <span class="z-punctuation z-definition z-list z-nix">[</span>
+  <span class="z-comment z-line z-number-sign z-nix"># ... other packages</span>
+  <span class="z-variable z-parameter z-name z-nix">kopia</span>
+<span class="z-punctuation z-definition z-list z-nix">]</span><span class="z-invalid z-illegal">;</span>
+</span></code></pre>
+<p>Then I just run <code>sudo nixos-rebuild switch</code> to rebuild my <em>Home Manager</em> config
+and install the software.</p>
+<h3 id="repository-creation">Repository creation</h3>
+<p>I'll be using a <em>Backblaze B2</em> bucket configured as an <em>S3</em> bucket. This,
+along with the other repository types, can be seen
+<a rel="noopener" target="_blank" href="https://kopia.io/docs/repositories/#kopia-cli">here</a>. The reason for
+configuring as an <em>S3</em> bucket is that some features such as object lock do not
+work with with the <em>B2</em> bucket interface. Plus, it saves re-configuring as I can
+use <em>S3</em> for many different cloud providers.</p>
+<p>I create the repository
+<a rel="noopener" target="_blank" href="https://kopia.io/docs/reference/command-line/common/repository-create-s3/">with</a>:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> repository create s3 <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">        --</span>bucket</span><span class="z-keyword z-operator z-assignment z-option z-shell">=</span>gtbbackupsall <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">        --</span>endpoint</span><span class="z-keyword z-operator z-assignment z-option z-shell">=</span>s3.us-east-005.backblazeb2.com <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">        --</span>access-key</span><span class="z-keyword z-operator z-assignment z-option z-shell">=</span>005b8442ecf5a4f0000000002 <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">        --</span>secret-access-key</span><span class="z-keyword z-operator z-assignment z-option z-shell">=</span><span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>secret!<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>
+</span></span></code></pre>
+<p>The command will ask for a bunch of stuff -- I just leave them all at their
+defaults. It will ask for a repository password which should be secure and is
+used for the encryption. It can be changed later.</p>
+<p>To connect to the repository later, just use connect rather than create.</p>
+<h3 id="server-mode">Server mode</h3>
+<p>This dedicated host will be running in server mode so that the other hosts can
+access the repository using some arbitrary login credentials rather than the
+encryption key. This mode is flexible and has customizable access control list
+rules, should that be something you need. I find that the defaults work fine for
+my use.</p>
+<p>The main reference for this section is
+<a rel="noopener" target="_blank" href="https://kopia.io/docs/repository-server/">here</a>.</p>
+<p>I'll be adding a user named <code>immich</code> on the host <code>immich</code>.</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> server user add immich@immich</span>
+</span></code></pre>
+<p>This will prompt for a password, which allows for users to access the repository
+without having the repository's private key.</p>
+<p>To start the server with an auto-generated TLS certificate for the first time,
+I run:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> server start <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>tls-generate-cert</span> <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>tls-cert-file</span> <span class="z-meta z-group z-expansion z-tilde"><span class="z-variable z-language z-tilde z-shell">~</span></span>/kopia.cert <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>tls-key-file</span> <span class="z-meta z-group z-expansion z-tilde"><span class="z-variable z-language z-tilde z-shell">~</span></span>/kopia.key <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>address</span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>HOST_IP<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>:51515 <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>server-control-username</span> control <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>server-control-password</span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>PASSWORD<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>
+</span></span></code></pre>
+<p>Of course, you can use your own certificates if you want. </p>
+<p>This will return the fingerprint of the certificate. If you missed it, just put
+a dummy value in and Kopia will tell you the real hash when you <a rel="noopener" target="_blank" href="https://kopia.discourse.group/t/how-to-get-kopia-server-sha/1490">try and fail
+to connect</a>.
+Otherwise you can use <code>openssl</code> to get the fingerprint, but it's honestly easier
+to just do it by failing to connect.</p>
+<p>For future launches of the server, ensure that you run the command without
+<code>--tls-generate-cert</code>.</p>
+<h3 id="access-control-list">Access control list</h3>
+<p>Now that I have a user, I want to set up the ACL to determine what they are
+allowed to do. The
+<a rel="noopener" target="_blank" href="https://kopia.io/docs/repository-server/#server-access-control-acl">default</a>
+is for the user to only be able to:</p>
+<ul>
+<li>read and write policies for <code>username@hostname</code> and
+<code>username@hostname:/path</code>,</li>
+<li>read and write snapshots for <code>username@hostname:/path</code>,</li>
+<li>read <code>global</code> policy,</li>
+<li>read <code>host</code>-level policies for their own <code>hostname</code>,</li>
+<li>read and write <code>user</code>-level policies for their own <code>username@hostname</code>,</li>
+<li>read and write their own <code>user</code> account <code>username@hostname</code> (to be able to
+change password),</li>
+<li>read objects if they know their object IDs</li>
+<li>write new <code>content</code> to the repository</li>
+</ul>
+<p>This is actually pretty tight, and it's not obvious whether any benefit
+would come from tightening it further. At the very least it will keep me from
+accidentally modifying something that I didn't mean to.</p>
+<h3 id="connecting">Connecting</h3>
+<p>To connect to the server from the <code>immich</code> host I run:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> repository connect server <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>url</span> https://<span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>SERVER_ADDRESS<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>:51515 <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>server-cert-fingerprint</span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>FINGERPRINT<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>override-username</span><span class="z-keyword z-operator z-assignment z-option z-shell">=</span>immich <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>override-hostname</span><span class="z-keyword z-operator z-assignment z-option z-shell">=</span>immich</span>
+</span></code></pre>
+<h3 id="defining-policy">Defining policy</h3>
+<p>Now that I'm connected to the repository on a computer with files that I want
+backed up, I need to tell Kopia how to back those files up.</p>
+<p>The <a rel="noopener" target="_blank" href="https://kopia.io/docs/getting-started/#policies">docs</a> sum up <code>policy</code>
+better than I can:</p>
+<blockquote>
+<p>I can change policy settings using the
+<a rel="noopener" target="_blank" href="https://kopia.io/docs/reference/command-line/common/policy-set/"><code>kopia policy set</code> command</a>.
+This command allows you to change the <code>global</code> policy or change specific
+policies for a ‘user@host’, a ‘@host’, a ‘user@host:path’, or a particular
+directory. For example, here I tell Kopia to set the policy to ignore two
+directories from being included in the snapshot of
+<code>jarek@jareks-mbp:/Users/jarek/Projects/Kopia/site</code>:</p>
+</blockquote>
+<p>There's just one policy that I will be modifying before creating my
+first snapshot. I want to
+<a rel="noopener" target="_blank" href="https://kopia.discourse.group/t/how-to-ignore-directories/497">exclude files and directories</a>
+from being snapshotted. To do that I run:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> policy set <span class="z-keyword z-control z-regexp z-set z-begin z-shell">[</span>directory to be snapshotted<span class="z-keyword z-control z-regexp z-set z-end z-shell">]</span> <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>add-ignore</span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>file glob<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>add-ignore</span> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>another file glob<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>
+</span></span></code></pre>
+<p>Alternatively, you can add a <code>.kopiaignore</code> file to the directory and add rules
+to it the same as a <code>.gitignore</code>.</p>
+<p>To check that only the thing you want will be snapshotted, run:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> snapshot estimate <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>path<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>
+</span></span></code></pre>
+<p>The only other policy that I might want to touch is how many snapshots to keep,
+but I can take care of that later.</p>
+<h3 id="compression-optional">Compression (optional)</h3>
+<p>Compression has <a rel="noopener" target="_blank" href="https://kopia.io/docs/advanced/compression/">good support</a> in
+<em>Kopia</em>, though there is still room for improvement as the algorithm for whether
+to compress a file or not is very rudimentary.</p>
+<p>To get started, I'd recommend benchmarking the algorithms on files that you're
+going to be including in snapshots. If you already know what algorithm you
+want to use, then take a look at
+<a rel="noopener" target="_blank" href="https://kopia.io/docs/advanced/compression/#algorithm">this table</a> for the
+name that <em>Kopia</em> uses for the algorithm. Then look to the end of this section
+for the command to add compression to the snapshot policy.</p>
+<p>Get started by adding a data directory to a .tar archive with:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">tar</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>cvf</span> test.tar <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>directory<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>
+</span></span></code></pre>
+<p>Note this doesn't exclude files that are ignored by Kopia. So if your ignore
+list is significant, this may give skewed results.</p>
+<p>Now benchmark every algorithm
+<a rel="noopener" target="_blank" href="https://kopia.io/docs/reference/command-line/common/benchmark-compression/">with</a>:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> benchmark compression <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell">  --</span>data-file</span><span class="z-keyword z-operator z-assignment z-option z-shell">=</span>test.tar <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span>  <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span><span class="z-punctuation z-terminator z-file-descriptor z-shell">-</span>-by-size or<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>by-alloc</span><span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>
+</span></span></code></pre>
+<p>The output will look something like:</p>
+<pre data-lang="txt" class="language-txt z-code"><code class="language-txt" data-lang="txt"><span class="z-text z-plain">    Compression                Compressed   Throughput   Allocs   Usage
+--------------------------------------------------------------------------
+ 0. zstd-better-compression    17.8 MB      210 MB/s     3163     99.7 MB
+ 1. gzip-best-compression      18 MB        34.9 MB/s    44       67.9 MB
+ 2. pgzip-best-compression     18 MB        183.8 MB/s   1549     143.6 MB
+ 3. deflate-best-compression   18 MB        40.1 MB/s    40       68.3 MB
+ 4. zstd                       18 MB        455.3 MB/s   3135     88.7 MB
+ 5. gzip                       18 MB        54.7 MB/s    41       67.9 MB
+ 6. zstd-fastest               18.3 MB      618.4 MB/s   6155     52.6 MB
+ 7. deflate-default            18.3 MB      281.5 MB/s   39       68.2 MB
+ 8. pgzip                      18.3 MB      1.1 GB/s     1479     130.1 MB
+ 9. s2-better                  18.6 MB      2.5 GB/s     1079     81.3 MB
+10. pgzip-best-speed           18.7 MB      1.9 GB/s     1398     100.6 MB
+11. deflate-best-speed         18.7 MB      459.9 MB/s   37       67.9 MB
+12. gzip-best-speed            18.8 MB      264.2 MB/s   46       68.3 MB
+13. s2-parallel-4              19.1 MB      2.8 GB/s     988      66.9 MB
+14. s2-parallel-8              19.1 MB      3.6 GB/s     1076     80.7 MB
+15. s2-default                 19.1 MB      4 GB/s       1130     84.9 MB
+</span></code></pre>
+<p><code>Compressed</code> is the final compressed size of the file.</p>
+<p><code>Throughput</code> is how much data can be compressed per second. Note that this
+assumes unlimited disk I/O speed. If you're snapshotting data from a spinning
+rust hard-drive, you probably can't hit the 4 GB/s that s2-default can
+theoretically provide.</p>
+<p><code>Allocs</code> is the number of memory allocations needed during compression. If you
+know why this is important, please drop me a line!</p>
+<p><code>Usage</code> is the total memory usage during compression. If your host is extremely
+memory constrained, this might be an important factor.</p>
+<p>Out of those, the only thing I look at is <code>compressed</code>. So I'll end up choosing
+<code>zstd-better-compression</code> almost every time. There used to be a
+<code>zstd-best-compression</code>, but that was deprecated for some reason, despite
+providing better compression ratio. The reason for this I'm not sure, but it's
+probably best to not use deprecated features.</p>
+<p>Finally, add compression using your algorithm of choice to the policy with:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> policy set <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>path<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> <span class="z-punctuation z-terminator z-file-descriptor z-shell">-</span>-compression=<span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>algorithm<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>
+</span></span></code></pre>
+<h3 id="snapshotting-directories">Snapshotting directories</h3>
+<p>Now with everything ready, I
+<a rel="noopener" target="_blank" href="https://kopia.io/docs/getting-started/#incremental-snapshots">create a snapshot</a>
+with:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">kopia</span></span><span class="z-meta z-function-call z-arguments z-shell"> snapshot create <span class="z-keyword z-operator z-assignment z-redirection z-shell">&lt;</span>path<span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span>
+</span></span></code></pre>
+<p>Assuming this succeeds, all that's left to do is configure automatic snapshots.
+You can use <code>cron</code> or <code>systemd services</code> to accomplish this -- <em>Kopia</em>
+apparently has something built in for scheduling backups, but one of the
+creators themselves
+<a rel="noopener" target="_blank" href="https://kopia.discourse.group/t/policy-schedule/74">doesn't use it</a>, so I'm
+not going to bother with it.</p>
+<p>Since NixOS already uses <em>systemd</em> extensively, I'm going to use a <em>systemd
+service</em> which gets triggered periodically by a <em>systemd timer</em> to automatically
+trigger snapshots. There are two main ways to do this -- either through <em>Home
+Manager</em> or through the global config. For <em>Home Manager</em>, I add something like
+<a rel="noopener" target="_blank" href="https://discourse.nixos.org/t/is-there-a-trick-to-getting-systemd-user-timers-to-work/27997">this</a>
+to my <em>Home Manager</em> config:</p>
+<pre data-lang="nix" class="language-nix z-code"><code class="language-nix" data-lang="nix"><span class="z-source z-nix"><span class="z-variable z-parameter z-name z-nix">systemd</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">user</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">services</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">kopia</span> <span class="z-invalid z-illegal">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+  <span class="z-entity z-other z-attribute-name z-multipart z-nix">Unit</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">Description</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>Kopia backup<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">After</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-list z-nix">[</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>network.target<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span> <span class="z-punctuation z-definition z-list z-nix">]</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+  <span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+  <span class="z-entity z-other z-attribute-name z-multipart z-nix">Service</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">Type</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>oneshot<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">ExecStart</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-support z-function z-nix">toString</span> <span class="z-punctuation z-definition z-expression z-nix">(</span>
+      <span class="z-variable z-parameter z-name z-nix">pkgs</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">writeShellScript</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>kopia-backup-script.sh<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span> <span class="z-string z-quoted z-other z-nix"><span class="z-punctuation z-definition z-string z-other z-start z-nix">&#39;&#39;</span>
+        set -eou pipefail
+
+        <span class="z-markup z-italic"><span class="z-punctuation z-section z-embedded z-begin z-nix">${</span><span class="z-variable z-parameter z-name z-nix">pkgs</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">kopia</span><span class="z-punctuation z-section z-embedded z-end z-nix">}</span></span>/bin/kopia snapshot create [SNAPSHOT_DIR1]
+        <span class="z-markup z-italic"><span class="z-punctuation z-section z-embedded z-begin z-nix">${</span><span class="z-variable z-parameter z-name z-nix">pkgs</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">kopia</span><span class="z-punctuation z-section z-embedded z-end z-nix">}</span></span>/bin/kopia snapshot create [SNAPSHOT_DIR2]
+      <span class="z-punctuation z-definition z-string z-other z-end z-nix">&#39;&#39;</span></span>
+    <span class="z-punctuation z-definition z-expression z-nix">)</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+  <span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+<span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-invalid z-illegal">;</span>
+
+<span class="z-variable z-parameter z-name z-nix">systemd</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">user</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">timers</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">kopia</span> <span class="z-invalid z-illegal">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+  <span class="z-entity z-other z-attribute-name z-multipart z-nix">Unit</span>.<span class="z-entity z-other z-attribute-name z-multipart z-nix">Description</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>Kopia backup schedule<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+  <span class="z-entity z-other z-attribute-name z-multipart z-nix">Timer</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">Unit</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>oneshot<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">OnBootSec</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>1h<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">OnUnitActiveSec</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>1h<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+  <span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+  <span class="z-entity z-other z-attribute-name z-multipart z-nix">Install</span>.<span class="z-entity z-other z-attribute-name z-multipart z-nix">WantedBy</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-list z-nix">[</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>timers.target<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span> <span class="z-punctuation z-definition z-list z-nix">]</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+<span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-invalid z-illegal">;</span>
+</span></code></pre>
+<p>For global config, I use something like
+<a rel="noopener" target="_blank" href="https://nixos.wiki/wiki/Systemd/Timers">this</a>:</p>
+<pre data-lang="nix" class="language-nix z-code"><code class="language-nix" data-lang="nix"><span class="z-source z-nix">  <span class="z-variable z-parameter z-name z-nix">systemd</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">services</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">kopia</span> <span class="z-invalid z-illegal">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">after</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-list z-nix">[</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>network.target<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span> <span class="z-punctuation z-definition z-list z-nix">]</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">serviceConfig</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+      <span class="z-entity z-other z-attribute-name z-multipart z-nix">Type</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>oneshot<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+      <span class="z-entity z-other z-attribute-name z-multipart z-nix">User</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>root<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+      <span class="z-entity z-other z-attribute-name z-multipart z-nix">ExecStart</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-support z-function z-nix">toString</span> <span class="z-punctuation z-definition z-expression z-nix">(</span>
+        <span class="z-variable z-parameter z-name z-nix">pkgs</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">writeShellScript</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>kopia-backup-script.sh<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span> <span class="z-string z-quoted z-other z-nix"><span class="z-punctuation z-definition z-string z-other z-start z-nix">&#39;&#39;</span>
+          set -eou pipefail
+
+          <span class="z-markup z-italic"><span class="z-punctuation z-section z-embedded z-begin z-nix">${</span><span class="z-variable z-parameter z-name z-nix">pkgs</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">kopia</span><span class="z-punctuation z-section z-embedded z-end z-nix">}</span></span>/bin/kopia snapshot create [SNAPSHOT_DIR1]
+          <span class="z-markup z-italic"><span class="z-punctuation z-section z-embedded z-begin z-nix">${</span><span class="z-variable z-parameter z-name z-nix">pkgs</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">kopia</span><span class="z-punctuation z-section z-embedded z-end z-nix">}</span></span>/bin/kopia snapshot create [SNAPSHOT_DIR2]
+        <span class="z-punctuation z-definition z-string z-other z-end z-nix">&#39;&#39;</span></span>
+      <span class="z-punctuation z-definition z-expression z-nix">)</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+    <span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+  <span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-invalid z-illegal">;</span>
+
+  <span class="z-variable z-parameter z-name z-nix">systemd</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">timers</span><span class="z-keyword z-operator z-nix">.</span><span class="z-variable z-parameter z-name z-nix">kopia</span> <span class="z-invalid z-illegal">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">timerConfig</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+      <span class="z-entity z-other z-attribute-name z-multipart z-nix">OnBootSec</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>1h<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+      <span class="z-entity z-other z-attribute-name z-multipart z-nix">OnUnitActiveSec</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>1h<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+      <span class="z-entity z-other z-attribute-name z-multipart z-nix">Unit</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>kopia.service<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+    <span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+    <span class="z-entity z-other z-attribute-name z-multipart z-nix">wantedBy</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-list z-nix">[</span> <span class="z-string z-quoted z-double z-nix"><span class="z-punctuation z-definition z-string z-double z-start z-nix">&quot;</span>timers.target<span class="z-punctuation z-definition z-string z-double z-end z-nix">&quot;</span></span> <span class="z-punctuation z-definition z-list z-nix">]</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+  <span class="z-punctuation z-definition z-attrset z-nix">}</span><span class="z-invalid z-illegal">;</span>
+</span></code></pre>
+<p>That's pretty much it! If all went well then snapshots should be quick and
+painless to add, and you can rest easy. Keep an eye out for a followup article
+on the second mandatory step for a good backup policy -- periodically verifying
+that backups are being taken, are accessible, and can be restored from quickly.</p>
+<h2 id="further-reading">Further reading</h2>
+<p><a rel="noopener" target="_blank" href="https://kopia.discourse.group/t/configure-multiple-repositories/1194/2/">https://kopia.discourse.group/t/configure-multiple-repositories/1194/2/</a></p>
+<p><a rel="noopener" target="_blank" href="https://kopia.io/docs/faqs/">https://kopia.io/docs/faqs/</a></p>
+<nav><div><a href="https://gabrieltb.me/blog/setting-up-zola-on-nixos/"
+              >&#8249; Setting Up Zola On NixOS</a></div><div></div></nav>
+    </article>
+
+    <div class="sblock">
+
+      <div class="blockdiv sticky">
+        <a class="b s150" href="#">Index</a>
+        <div>
+          <a href="#setting-up-kopia">Setting up Kopia</a>
+        </div>
+        <div class="hpad">
+          <a href="#installation"><small>- Installation</small></a>
+        </div>
+        <div class="hpad">
+          <a href="#repository-creation"><small>- Repository creation</small></a>
+        </div>
+        <div class="hpad">
+          <a href="#server-mode"><small>- Server mode</small></a>
+        </div>
+        <div class="hpad">
+          <a href="#access-control-list"><small>- Access control list</small></a>
+        </div>
+        <div class="hpad">
+          <a href="#connecting"><small>- Connecting</small></a>
+        </div>
+        <div class="hpad">
+          <a href="#defining-policy"><small>- Defining policy</small></a>
+        </div>
+        <div class="hpad">
+          <a href="#compression-optional"><small>- Compression (optional)</small></a>
+        </div>
+        <div class="hpad">
+          <a href="#snapshotting-directories"><small>- Snapshotting directories</small></a>
+        </div>
+        <div>
+          <a href="#further-reading">Further reading</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav><div><a class="js m-protected" href="#Z2FicmllbEBnYWJyaWVsdGIubWU=" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a><a href="https://www.linkedin.com/in/gabrieldtb/" target="_blank" title="LinkedIn"><i type="Button" class="svg linkedin" title="LinkedIn"></i></a><a href="https://github.com/gabrieldtb/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a><a href="https://discord.com/users&#x2F;rustaceous/" target="_blank" title="Discord"><i type="Button" class="svg discord" title="Discord"></i></a></div></nav>
+          
+      <p class="s90"> © <span id="year">2024</span> Gabriel Talbert Bunt | <a href="about">?</a></p>
+      <p class="s90">
+      <a href="https://github.com/Stevens-26/webring/">Stevens Community Webring</a>
+      </p>
+      <div class="s90">
+        <b>&lt|</b>
+        <a id="sitwebringleft" href="https://nad2040.github.io/">Dan Liu</a>
+        <b>·</b>
+        <a id="sitwebringrandom" href="404">Random</a>
+        <b>·</b>
+        <a id="sitwebringright" href="https://alexjportfolio.vercel.app/">Alexander Jansiewicz</a>
+        <b>|&gt</b>
+      </div>
+    </div>
+  </footer><span class="topout">
+<span class="topleft"> </span><a href="#" class="top" title="Back to Top"><i class="svgs svgh angu"></i></a>
+</span>
+</body>
+</html>

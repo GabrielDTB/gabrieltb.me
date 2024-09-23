@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://gabrieltb.me/js/theme.min.js" integrity="sha384-pb++s6uBRKaQv+iAXpgA/H3IlpLZdO14tTwuCI7uXmz4aaZdByoCcM+6BhynMq/1"></script>
+  <link rel="stylesheet" href="https://gabrieltb.me/abridge.css?h=b3481634ca8d2e2815e5" />
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="base" content="https://gabrieltb.me" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <link rel="manifest" href="https://gabrieltb.me/manifest.min.json" />
+  <link rel="mask-icon" href="https://gabrieltb.me/safari-pinned-tab.svg" color="#FFFFFF" />
+  <link rel="icon" type="image/svg+xml" href="https://gabrieltb.me/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://gabrieltb.me/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://gabrieltb.me/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://gabrieltb.me/favicon-16x16.png" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <title>Setting Up Zola On NixOS | Gabriel Talbert Bunt</title>
+  <meta name="author" content="Gabriel Talbert Bunt" />
+  <meta name="copyright" content="Gabriel Talbert Bunt" />
+  <meta name="description" content="Devlog for setting up my first personal website, walking through the setup process for Zola on NixOS" />
+  <link rel="canonical" href="https://gabrieltb.me/blog/setting-up-zola-on-nixos/" />
+  <meta name="keywords" content="blog, personal site" />
+  <meta property="og:url" content="https://gabrieltb.me/blog/setting-up-zola-on-nixos/" />
+  <meta name="twitter:url" content="https://gabrieltb.me/blog/setting-up-zola-on-nixos/" />
+  <meta property="og:description" content="Devlog for setting up my first personal website, walking through the setup process for Zola on NixOS" />
+  <meta name="twitter:description" content="Devlog for setting up my first personal website, walking through the setup process for Zola on NixOS" />
+  <meta property="og:title" content="Setting Up Zola On NixOS | Gabriel Talbert Bunt" />
+  <meta name="twitter:title" content="Setting Up Zola On NixOS | Gabriel Talbert Bunt" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://gabrieltb.me/banner.png" />
+  <meta property="og:image" content="https://gabrieltb.me/banner.png" />
+  <meta property="og:site_name" content="Gabriel Talbert Bunt" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:updated_time" content="2023-11-09" />
+  <script defer src="https://gabrieltb.me/js/theme_button.js?h=88ef48703a1e0adb544c" integrity="sha384-IM4TFKBTNeV1+uJdNlY98JIVpr06AHHcQdvtFC49HFw2PrKkEFdUPcOmtcd2p3eV"></script>
+  <script defer src="https://gabrieltb.me/js/email.js?h=ee3dd742e11c5014fdef" integrity="sha384-y0LUfjslyVLYZvCOyhELpvKivlXAq27Vnbed54glXoe/pZSYS/Pfqghp/sQt1xcV"></script>
+  <script defer src="https://gabrieltb.me/js/codecopy.js?h=0a54f99e682443925d3a" integrity="sha384-qssVvPpQgISh4PFkSBGTgXEMzuFO8Hat5m1MsdkpannoByWSTpLfBe4iEVl3+RiP"></script>
+  <script defer src="https://gabrieltb.me/js/sw_load.js?h=c78b2129fc8ba90d8121" integrity="sha384-+/AkBAf3daFHApyORJhlCmEx061QHqCUBeTBFVStcGq7vrnZu0odhtV+U0hrCzHr"></script>
+  <noscript><link rel="stylesheet" href="https://gabrieltb.me/nojs.css" /></noscript>
+  <script>
+    (async () => { try {
+      const api = "https://sitring.eric.si/gabrieldtb/";
+      n = await(await fetch(api + "neighbors")).json(); 
+      n.push(await(await fetch(api + "random")).json());
+      for ([i, a] of [
+        "sitwebringleft", "sitwebringright", "sitwebringrandom"
+      ].map(id => document.getElementById(id)).entries()) {
+        a.setAttribute("href", n[i].url);
+        if (i != 2) { a.text = n[i].name }
+      }} catch (error) { console.error(error) }})()
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <div><h1><a href="https://gabrieltb.me" title="Gabriel Talbert Bunt">Home</a></h1></div>
+      <div>
+
+        <div>
+          <ul><li><a class="s110" href="https://gabrieltb.me/blog/"> Blog </a></li><li><a class="s110" href="https://gabrieltb.me/µ/"> µ </a></li><li><i type="reset" id="mode" class="js svgs adjust"></i></ul>
+        </div>
+
+        <div>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+  <main>
+    <article><h1><a href="https://gabrieltb.me/blog/setting-up-zola-on-nixos/">Setting Up Zola On NixOS</a></h1><span                                                                                               
+      class="s95"                                                                         
+  >9&nbspmin&nbspread<span class="hpad">·</span>November&nbsp;02,&nbsp;2023<span class="hpad">·</span><em>(November&nbsp;09,&nbsp;2023)</em><span class="hpad">·</span>#<a href="
+          https://gabrieltb.me/tags/devlog/
+        ">Devlog&nbsp;</a>#<a href="
+          https://gabrieltb.me/tags/linux/
+        ">Linux&nbsp;</a>#<a href="
+          https://gabrieltb.me/tags/nixos/
+        ">NixOS&nbsp;</a>#<a href="
+          https://gabrieltb.me/tags/web/
+        ">Web&nbsp;</a></span>
+
+    
+
+
+<p>I want a website. I don't need anything fancy, so a static site is fine with me. Plus, static sites come with the benefit of easy hosting and less complexity for me to deal with. Someone recommended me to try out <a rel="noopener" target="_blank" href="https://www.getzola.org"><em>Zola</em></a>, and after looking into it and playing around, it looks like it does what I need it to. </p>
+<p><em>Zola</em> comes as a single binary, so theoretically I'll be able to build my site far in the future without any difficulty. Their opinionated approach also means that most things I need are built in with no need to include external libraries. Everything else is what you'd expect from a modern platform -- fast build times, live reloading, and quality tooling. Also, it's written in <em>Rust</em>, so it gets bonus points from me. </p>
+<p>This first post about <em>Zola</em> will document my experience with setting it up for the first time in order to create the scaffolding for my first personal website.</p>
+<h2 id="the-plan">The plan</h2>
+<p>For my website I want just a few features to reach my MVP. These are...</p>
+<ul>
+<li>A blog</li>
+<li>An about me page</li>
+<li>Room for other pages</li>
+<li>Hosted and accessible by my domain</li>
+</ul>
+<p>Because I have minimal experience with web technologies, to get started I will be using a template. Or, as they are known in <em>Zola</em>, a theme. There are many community themes <a rel="noopener" target="_blank" href="https://www.getzola.org/themes/">that I can choose from</a> .</p>
+<p>For the hosting, I'm planning on using <em>GitHub Pages</em> since the repository will live on <em>GitHub</em>  and the service is free.</p>
+<h2 id="getting-started">Getting started</h2>
+<p>To get started with <em>Zola</em> I initialize my repository and add my <code>shell.nix</code> file to it:</p>
+<pre data-lang="nix" class="language-nix z-code"><code class="language-nix" data-lang="nix"><span class="z-source z-nix"><span class="z-keyword z-other z-nix">with</span> <span class="z-support z-function z-nix">import</span> <span class="z-string z-unquoted z-spath z-nix">&lt;nixpkgs&gt;</span> <span class="z-punctuation z-definition z-attrset z-nix">{</span><span class="z-punctuation z-definition z-attrset z-nix">}</span>;
+<span class="z-variable z-parameter z-name z-nix">mkShell</span> <span class="z-punctuation z-definition z-attrset-or-function z-nix">{</span>
+  <span class="z-entity z-other z-attribute-name z-multipart z-nix">buildInputs</span> <span class="z-keyword z-operator z-bind z-nix">=</span> <span class="z-punctuation z-definition z-list z-nix">[</span>
+    <span class="z-variable z-parameter z-name z-nix">zola</span>
+  <span class="z-punctuation z-definition z-list z-nix">]</span><span class="z-punctuation z-terminator z-bind z-nix">;</span>
+<span class="z-punctuation z-definition z-attrset z-nix">}</span>
+</span></code></pre>
+<p>Someday I will convert the repository into a <em>Nix flake</em> and make all of the required build inputs explicit. For now, this is the only package that I need added on my machine.</p>
+<p>Because I'm using <em>nix-direnv</em> I also initialize my <code>.envrc</code> and activate it with:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">use_nix</span></span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-keyword z-operator z-assignment z-redirection z-shell">&gt;</span> .envrc</span>
+<span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">direnv</span></span><span class="z-meta z-function-call z-arguments z-shell"> allow</span>
+</span></code></pre>
+<p>Since <em>nix-direnv</em> caches its output in <code>.direnv</code>, I create my <code>.gitignore</code> and add <code>.direnv</code> to it.</p>
+<blockquote>
+<p>After writing, I followed <a rel="noopener" target="_blank" href="https://github.com/direnv/direnv/wiki/Customizing-cache-location">this</a> to change the cache directory to not live in the current directory. Thus, I no longer need to have <code>.direnv</code> in my <code>.gitignore</code>.</p>
+</blockquote>
+<p>Now I initialize the <em>Zola</em> project with <code>zola init website</code>. </p>
+<blockquote>
+<p>This causes issues later. I would recommend running <code>zola init</code> on the directory itself, instead.</p>
+</blockquote>
+<p>The output is as follows:</p>
+<pre data-lang="txt" class="language-txt z-code"><code class="language-txt" data-lang="txt"><span class="z-text z-plain">$ zola init website
+------------
+Welcome to Zola!
+Please answer a few questions to get started quickly.
+Any choices made can be changed by modifying the `config.toml` file later.
+&gt; What is the URL of your site? (https://example.com): &lt;&lt;https://gabrieltb.me&gt;&lt;Enter&gt;&gt;
+&gt; Do you want to enable Sass compilation? [Y/n]: &lt;&lt;Enter&gt;&gt;
+&gt; Do you want to enable syntax highlighting? [y/N]: &lt;&lt;y&gt;&lt;Enter&gt;&gt;
+&gt; Do you want to build a search index of the content? [y/N]: &lt;&lt;Enter&gt;&gt;
+
+Done! Your site was created in /home/gabe/Coding/website/website
+
+Get started by moving into the directory and using the built-in server: `zola serve`
+Visit https://www.getzola.org for the full documentation.
+</span></code></pre>
+<p>Now the directory structure is:</p>
+<pre data-lang="txt" class="language-txt z-code"><code class="language-txt" data-lang="txt"><span class="z-text z-plain">├── .direnv/...
+├── .envrc
+├── .git/...
+├── .gitignore
+├── shell.nix
+└── website/
+    ├── config.toml
+    ├── content/
+    ├── sass/
+    ├── static/
+    ├── templates/
+    └── themes/
+</span></code></pre>
+<blockquote>
+<p>This layout causes issues later with deploying to <em>GitHub Pages</em>.</p>
+</blockquote>
+<p>Now I check whether I can serve the website by running </p>
+<pre data-lang="txt" class="language-txt z-code"><code class="language-txt" data-lang="txt"><span class="z-text z-plain">$ zola serve
+------------
+Building site...
+Checking all internal links with anchors.
+&gt; Successfully checked 0 internal link(s) with anchors.
+-&gt; Creating 0 pages (0 orphan) and 0 sections
+Done in 4ms.
+
+Web server is available at http://127.0.0.1:1111
+
+Listening for changes in /home/gabe/Coding/website/website/{config.toml,content,sass,static,templates}
+Press Ctrl+C to stop
+</span></code></pre>
+<p>Visiting the site at <code>localhost:1111</code> gives me the default <em>Zola</em> page, so everything is in order.</p>
+<blockquote>
+<p>Note that this also causes issues much later. I'd recommend visiting the site at <a rel="noopener" target="_blank" href="http://127.0.0.1:1111">http://127.0.0.1:1111</a> rather than <a href="localhost:1111">locahlhost:1111</a>.</p>
+</blockquote>
+ 
+<img src="zola-default.png" alt="Default Zola frontpage" width="1598" height="900" loading="lazy" />
+<h2 id="picking-a-theme">Picking a theme</h2>
+<p>There sure are a lot of themes available! I took my time and looked through every single one of them, partly to find the ones that I like, and partly to gain inspiration. I know that for my blog I would like to implement a two-mode view -- one mode for the whole blog, and one view just for the commands with annotations. I'm still thinking about the best way to go about doing this, but looking at all the themes gave some inspiration. I'm looking at you, <a rel="noopener" target="_blank" href="https://www.getzola.org/themes/codinfox-zola/"><em>codinfox-zola</em></a>. It was cool seeing all the retro and minimalist themes, as well as the more graphic-design oriented ones. </p>
+<p>It hurts to say it, but after painstakingly looking through each and every theme, I've landed on using the very first theme listed on the page, <a rel="noopener" target="_blank" href="https://www.getzola.org/themes/abridge/"><em>Abridge</em></a>. I really like how it looks by default and it comes with lots of cool features out of the box. That said, <a rel="noopener" target="_blank" href="https://archie-zola.vercel.app/posts/hello-archie/"><em>hello-archie</em></a> was a close runner up for me. Maybe I will end up taking what I like about that theme and incorporating it into my site! For now, let's focus on <em>Abridge</em> to get that MVP.</p>
+<p>I'll be installing <em>Abridge</em> as a <em>Git submodule</em>, as this is the recommended approach for <a rel="noopener" target="_blank" href="https://www.getzola.org/documentation/deployment/github-pages/">deploying on <em>GitHub Pages</em></a>, which is what I'll be doing after this.</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">git</span></span><span class="z-meta z-function-call z-arguments z-shell"> submodule add <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span>  <span class="z-string z-quoted z-double z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&quot;</span>https://github.com/jieiku/abridge.git<span class="z-punctuation z-definition z-string z-end z-shell">&quot;</span></span> <span class="z-punctuation z-separator z-continuation z-line z-shell">\
+</span>  website/themes/abridge</span>
+</span></code></pre>
+<p>Roughly following the <a rel="noopener" target="_blank" href="https://abridgecss.netlify.app/overview-abridge/#3-configuration">directions</a>, I do:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">touch</span></span><span class="z-meta z-function-call z-arguments z-shell"> templates/.gitkeep</span>
+<span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cp</span></span><span class="z-meta z-function-call z-arguments z-shell"> themes/abridge/config.toml .</span>
+<span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cp</span></span><span class="z-meta z-function-call z-arguments z-shell"> themes/abridge/content/_index.md content</span>
+<span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cp</span></span><span class="z-meta z-function-call z-arguments z-shell"> themes/abridge/COPY-TO-ROOT-SASS/<span class="z-keyword z-operator z-regexp z-quantifier z-shell">*</span> sass<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>r</span></span>
+<span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cp</span></span><span class="z-meta z-function-call z-arguments z-shell"> themes/abridge/netlify.toml .</span>
+<span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cp</span></span><span class="z-meta z-function-call z-arguments z-shell"> themes/abridge/package.json .</span>
+<span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">cp</span></span><span class="z-meta z-function-call z-arguments z-shell"> themes/abridge/content/static content<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>r</span></span>
+</span></code></pre>
+<p>Next I go in and edit the <code>config.toml</code> to my liking. In particular I change the <code>base_url</code>, <code>online_url</code>, <code>title</code>, and <code>description</code>. I delete the French language section, but only comment out the Spanish section because I might want to translate the site to Spanish at some point. I also uncomment <code>theme = &quot;abridge&quot;</code> so that the theme is actually used.</p>
+<p>Running <code>zola serve</code> gives me this blank canvas:</p>
+ 
+<img src="abridge-default.png" alt="Default Abridge frontpage" width="1596" height="900" loading="lazy" />
+<p>Make sure to commit and push all changes at this point.</p>
+<h2 id="setting-up-github-pages">Setting up GitHub Pages</h2>
+<p>Now that I have <strong>something</strong> to deploy, I might as well set up <em>GitHub Pages</em>. Following <a rel="noopener" target="_blank" href="https://www.getzola.org/documentation/deployment/github-pages/">the docs</a>, I will use <em>GitHub Actions</em> for my CI. For this I will need to create the <em>GitHub Action</em> and change some settings.</p>
+<p>To create the action I just go to the <code>Actions</code> page and click <code>Set up a workflow yourself</code>. Then I paste in the following:</p>
+<pre data-lang="yml" class="language-yml z-code"><code class="language-yml" data-lang="yml"><span class="z-source z-yaml"><span class="z-comment z-line z-number-sign z-yaml"><span class="z-punctuation z-definition z-comment z-line z-number-sign z-yaml">#</span> On every push this script is executed
+</span><span class="z-constant z-language z-boolean z-yaml">on</span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">push</span>
+<span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">name</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">Build and deploy GH Pages</span>
+<span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">jobs</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span>
+  <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">build</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span>
+    <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">runs-on</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">ubuntu-latest</span>
+    <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">if</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">github.ref == &#39;refs/heads/main&#39;</span>
+    <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">steps</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span>
+      <span class="z-punctuation z-definition z-block z-sequence z-item z-yaml">-</span> <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">name</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">checkout</span>
+        <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">uses</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">actions/checkout@v3.0.0</span>
+      <span class="z-punctuation z-definition z-block z-sequence z-item z-yaml">-</span> <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">name</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">build_and_deploy</span>
+        <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">uses</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">shalzz/zola-deploy-action@v0.17.2</span>
+        <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">env</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span>
+          <span class="z-comment z-line z-number-sign z-yaml"><span class="z-punctuation z-definition z-comment z-line z-number-sign z-yaml">#</span> Target branch
+</span>          <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">PAGES_BRANCH</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">gh-pages</span>
+          <span class="z-comment z-line z-number-sign z-yaml"><span class="z-punctuation z-definition z-comment z-line z-number-sign z-yaml">#</span> Or if publishing to the same repo, use the automatic token
+</span>          <span class="z-string z-unquoted z-plain z-out z-yaml"><span class="z-entity z-name z-tag z-yaml">TOKEN</span></span><span class="z-punctuation z-separator z-key-value z-mapping z-yaml">:</span> <span class="z-string z-unquoted z-plain z-out z-yaml">${{ secrets.GITHUB_TOKEN }}</span>
+</span></code></pre>
+<p>I commit this to main and the build fails. </p>
+<p>This is because the build script expects the root of the repository to house the website files, which is not the case with my directory layout. Not a big deal, I just move everything from <code>website</code> into the parent folder, update my <code>.gitmodules</code> to reflect the new path that the <em>Abridge</em> submodule will live, and push my changes.</p>
+<p>Then the build fails again, this time due to insufficient privileges. Going into <code>Settings &gt; Actions &gt; General &gt; Workflow Permissions</code> and changing it to read and write fixes this and the build completes successfully. </p>
+<p>Now that the website is being successfully built, I need to deploy it. I go to <code>Settings &gt; Pages</code> and change the deployment branch to <code>gh-pages</code>. This succeeds and I can view my site at https://gabrieldtb.github.io/website/. It doesn't look as expected...</p>
+ 
+<img src="abridge-weird.png" alt="Abridge homepage without most styling" width="1596" height="900" loading="lazy" />
+<blockquote>
+<p>In hindsight I believe the issue stemmed from the site being <em>HTTP</em> so less stuff was accepted/loaded. Though, I'm not really sure.</p>
+</blockquote>
+<p>Not entirely sure why it looks like that, but for now, let's just set up the custom domain.</p>
+<h2 id="custom-domain">Custom domain</h2>
+<p>Still in the <code>Pages</code> settings, under <code>&gt; Custom domain</code> I fill in my domain as <code>gabrieltb.me</code> and hit save. Then I head over to my domain registrar and add four &quot;A&quot; address records. Incidentally, these <a rel="noopener" target="_blank" href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site">are</a>:</p>
+<pre data-lang="txt" class="language-txt z-code"><code class="language-txt" data-lang="txt"><span class="z-text z-plain">185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+</span></code></pre>
+<p>Because a friend reminded me that IPV6 exists, I add the &quot;AAAA&quot; records that point to the site as well:</p>
+<pre data-lang="txt" class="language-txt z-code"><code class="language-txt" data-lang="txt"><span class="z-text z-plain">2606:50c0:8000::153
+2606:50c0:8001::153
+2606:50c0:8002::153
+2606:50c0:8003::153
+</span></code></pre>
+<p>Then, in my repository, I create <code>static/CNAME</code> that contains just <code>gabrieltb.me</code>. Pushing that change, I await a successful build and deployment. Nothing went wrong, so I visit the site at <code>http://gabrieltb.me</code> and it looks exactly the same. Whatever, I should finish the job and enable <em>HTTPS</em> enforcement since being flagged as insecure looks bad. Still in <code>Pages</code>, I go to enable <em>HTTPS</em> but the option is grayed out. After futzing around, <a rel="noopener" target="_blank" href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages">reading some outdated articles</a>, and getting error messages saying that my domain verification failed, the option to enable it is no longer grayed out. Hooray! And with that, the site is no longer mangled. Another hooray!</p>
+<h2 id="what-s-next">What's next?</h2>
+<p>This takes care of the deployment and hosting, and the remaining parts of finishing the MVP have a lot of support with the <em>Abridge</em> theme. </p>
+<p>Next up will be editing the style a bit so that my site doesn't look like default <em>Abridge</em>, getting acquainted with how to publish articles and publishing one, and making the layout of my site more personalized. </p>
+<nav><div></div><div><a href="https://gabrieltb.me/blog/installing-kopia-on-nixos/"
+              > Installing Kopia on Nixos &#8250;</a></div></nav>
+    </article>
+
+    <div class="sblock">
+
+      <div class="blockdiv sticky">
+        <a class="b s150" href="#">Index</a>
+        <div>
+          <a href="#the-plan">The plan</a>
+        </div>
+        <div>
+          <a href="#getting-started">Getting started</a>
+        </div>
+        <div>
+          <a href="#picking-a-theme">Picking a theme</a>
+        </div>
+        <div>
+          <a href="#setting-up-github-pages">Setting up GitHub Pages</a>
+        </div>
+        <div>
+          <a href="#custom-domain">Custom domain</a>
+        </div>
+        <div>
+          <a href="#what-s-next">What&#x27;s next?</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <hr />
+    <div class="c">
+      <nav><div><a class="js m-protected" href="#Z2FicmllbEBnYWJyaWVsdGIubWU=" target="_blank" title="Mail"><i type="Button" class="svg mail" title="Mail"></i></a><a href="https://www.linkedin.com/in/gabrieldtb/" target="_blank" title="LinkedIn"><i type="Button" class="svg linkedin" title="LinkedIn"></i></a><a href="https://github.com/gabrieldtb/" target="_blank" title="Github"><i type="Button" class="svg github" title="Github"></i></a><a href="https://discord.com/users&#x2F;rustaceous/" target="_blank" title="Discord"><i type="Button" class="svg discord" title="Discord"></i></a></div></nav>
+          
+      <p class="s90"> © <span id="year">2024</span> Gabriel Talbert Bunt | <a href="about">?</a></p>
+      <p class="s90">
+      <a href="https://github.com/Stevens-26/webring/">Stevens Community Webring</a>
+      </p>
+      <div class="s90">
+        <b>&lt|</b>
+        <a id="sitwebringleft" href="https://nad2040.github.io/">Dan Liu</a>
+        <b>·</b>
+        <a id="sitwebringrandom" href="404">Random</a>
+        <b>·</b>
+        <a id="sitwebringright" href="https://alexjportfolio.vercel.app/">Alexander Jansiewicz</a>
+        <b>|&gt</b>
+      </div>
+    </div>
+  </footer><span class="topout">
+<span class="topleft"> </span><a href="#" class="top" title="Back to Top"><i class="svgs svgh angu"></i></a>
+</span>
+</body>
+</html>
