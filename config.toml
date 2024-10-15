@@ -63,6 +63,8 @@ smart_punctuation = false          # `...` to `…`, `"quote"` to `“curly”` 
 
 menu = [
     # {url = "about", name = "About", slash = true, blank = false, size="s110"},
+    {url = "Gabriel_Talbert_Bunt_CV.pdf", name = "CV", slash = false, blank = true, size="s110"},
+    {url = "projects", name = "Projects", slash = true, blank = false, size="s110"},
     {url = "blog", name = "Blog", slash = true, blank = false, size="s110"},
     {url = "µ", name = "µ", slash = true, blank = false, size = "s110"},
 ]
