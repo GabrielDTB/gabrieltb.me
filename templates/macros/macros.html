@@ -33,6 +33,7 @@ macro meta_post(page, config)                                                   
     if meta.size                                                                                    %}
       class="{{ meta.size }}"                                                                         {%
     endif                                                                                           %}
+    style="display: flex; flex-wrap: wrap; gap: 0px;"
   >                                                                                                   {% endfilter %}{#
 
     // Author                                                                                       #}{%
@@ -138,9 +139,9 @@ macro meta_post(page, config)                                                   
     // Tags                                                                                         #}{%
     if page.taxonomies.tags                                                                         %}{%
       for tag in page.taxonomies.tags                                                               %}{% filter trim %}
-        #<a href="
+        <a href="
           {{ get_taxonomy_url(kind='tags', name=tag, lang=lang) | safe }}
-        ">{{ tag }}&nbsp;</a>                                                                         {% endfilter %}{%
+        ">#{{ tag }}&nbsp;</a>                                                                         {% endfilter %}{%
       endfor                                                                                        %}{%
     endif                                                                                           %}{% filter trim %}
   </span>                                                                                             {% endfilter %}{%
