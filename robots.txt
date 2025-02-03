@@ -1,0 +1,5 @@
+
+Sitemap: https://gabrieltb.me/sitemap.xml
+User-Agent: *
+Allow: /
+Host: https://gabrieltb.me
