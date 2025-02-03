@@ -9,7 +9,7 @@ updated = 2023-11-12
 draft = false
 
 [taxonomies]
-tags = ["Data","Linux","NixOS","Tutorial"]
+tags = ["Data","Linux","Nix","NixOS","Tutorial"]
 [extra]
 toc = true
 +++
